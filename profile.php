@@ -1,17 +1,12 @@
 <?php
 
-    $host = "localhost";
-    $username = "root";
-    $password = "";
-    $database = "db_findbooks";
+          include_once("connection.php");
+          $con = connection();
 
+          $sql = "SELECT * from tbl_users";
+          $books = $con->query($sql) or die ($con->error);
+          $row = $books->fetch_assoc();
 
-    $con = new mysqli($host, $username, $password, $database);
-
-
-    if($con->connect_error){
-      echo $con->connect_error;
-    }
     
 
 ?>
@@ -97,19 +92,18 @@
               <div class="col-12 col-md-12 col-lg-4">
                 <div class="card author-box">
                   <div class="card-body">
+                  <?php do{ ?>
                     <div class="author-box-center">
                       <img alt="image" src="assets/img/users/user_1.jpg" class="rounded-circle author-box-picture">
                       <div class="clearfix"></div>
                       <div class="author-box-name">
-                        <a href="#">Paige</a>
+                        <a href="#"><?php echo $row['name']; ?></a>
                       </div>
-                      <div class="author-box-job">Book Nerd</div>
+                      <div class="author-box-job"><?php echo $row['b_name']; ?></div>
                     </div>
                     <div class="text-center">
                       <div class="author-box-description">
-                        <p>
-                        “Reality doesn’t always give us the life that we desire, but we can always find what we desire between the pages of books.”
-                        ―Adelise M. Cullens
+                        <p><?php echo $row['bio']; ?>
                         </p>
                       </div>
                       <div class="mb-2 mt-3">
@@ -142,7 +136,7 @@
                           Birthday
                         </span>
                         <span class="float-right text-muted">
-                          30-07-1998
+                        <?php echo $row['b_day']; ?>
                         </span>
                       </p>
                       <p class="clearfix">
@@ -150,7 +144,7 @@
                           Phone
                         </span>
                         <span class="float-right text-muted">
-                          (0123)123456789
+                        <?php echo $row['phone']; ?>
                         </span>
                       </p>
                       <p class="clearfix">
@@ -158,7 +152,7 @@
                           Mail
                         </span>
                         <span class="float-right text-muted">
-                          paige@gmail.com
+                        <?php echo $row['mail']; ?>
                         </span>
                       </p>
                       <p class="clearfix">
@@ -166,7 +160,7 @@
                           Facebook
                         </span>
                         <span class="float-right text-muted">
-                          <a href="#">Pai ge</a>
+                          <a href="#"><?php echo $row['fb_acc']; ?></a>
                         </span>
                       </p>
                       <p class="clearfix">
@@ -174,12 +168,13 @@
                           Twitter
                         </span>
                         <span class="float-right text-muted">
-                          <a href="#">@paige</a>
+                          <a href="#"><?php echo $row['twitter_acc']; ?></a>
                         </span>
                       </p>
                     </div>
                   </div>
                 </div>
+                <?php }while($row = $books->fetch_assoc()) ?>
                 <div class="card">
                   <div class="card-header">
                     <h4>Status</h4>
